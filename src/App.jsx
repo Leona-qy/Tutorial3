@@ -2,18 +2,84 @@
 const initialTravellers = [
   {
     id: 1, name: 'Lily', phonenum: '12345678',
-    time: '2022-02-22', ope: 'delete',
+    time: '2022-02-22',
   },
   {
     id: 2, name: 'Mike', phonenum: '56781234',
-    time: '2022-02-23' , ope: 'delete',
+    time: '2022-02-23' ,
   },
 ];
 
-class ReservedTicket extends React.Component{
+class ReservedTicket extends React.Component{ 
+  componentDidMount() {
+    const containers = document.querySelectorAll(".seatEmpty");
+    const travellers=this.props.travellers;
+    const occupiedSeatNum=travellers.length
+    const freeSeatNum=25-occupiedSeatNum
+    for(var i=0;i<occupiedSeatNum;i++){
+      containers[i].classList.toggle("seatOccupied");
+    }
+  }
   render(){
+    const travellers=this.props.travellers;
+    const occupiedSeatNum=travellers.length
+    const freeSeatNum=25-occupiedSeatNum
     return (
-      <div>This is the place for showing reserved tickets</div>
+      <div>
+        <div style={{alignItems: 'center', justifyContent: 'space-between',
+        flexDirection: 'row'}}>The number of free seats are {freeSeatNum}.
+        </div>
+        <ul className="showstyle"> 
+          <li>
+            <div className="seatEmptyori"></div>
+            <small>Empty Seat</small>
+          </li>
+          <li>
+            <div className="seatOccupiedori"></div>
+            <small>Occupied Seat</small>
+          </li>
+        </ul>
+        <div className="container">
+
+          <div className="row">
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+          </div>
+          <div className="row">
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+          </div>
+          <div className="row">
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+          </div>
+          <div className="row">
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+          </div>
+          <div className="row">
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+              <div className="seatEmpty"></div>
+          </div>
+        </div>
+
+      </div>
+
     );
   }
 }
@@ -28,7 +94,6 @@ class TravellerRow extends React.Component{
         <td style = {style}>{traveller.name}</td>
         <td style = {style}>{traveller.phonenum}</td>
         <td style = {style}>{traveller.time}</td>
-        <td style = {style}>{traveller.ope}</td>
       </tr>
     );
   }
@@ -41,22 +106,23 @@ class ReservationList extends React.Component{
     const travellerRows = this.props.travellers.map(traveller => 
       <TravellerRow key={traveller.id} traveller={traveller} />
       );
-
+    
+    
     return (
-      <table style={{borderCollapse:"collapse"}} id="del">
+      <table className="showlist" id="display" style={{borderCollapse:"collapse", display:"block"}} id="del">
         <thead>
           <tr>
             <th style={rowStyle}>Serial No.</th>
             <th style={rowStyle}>Name</th>
             <th style={rowStyle}>Phone number</th>
             <th style={rowStyle}>Timestamp</th>
-            <th style={rowStyle}>Operation</th>
           </tr>
         </thead>
         <tbody>
           {travellerRows}
         </tbody>
       </table>
+
     );
   }
 }
@@ -73,7 +139,7 @@ class TravellerDel extends React.Component{
     const form=document.forms.travellerDel; 
     const objectDel=Number(form.serialno.value)
     if (objectDel > travellers.length) {
-      alert("error");
+      alert("Error:No Such a Traveller.");
     }
     else{
 
@@ -97,8 +163,9 @@ class TravellerAdd extends React.Component{
   constructor() {
     super();
     this.handleSubmit=this.handleSubmit.bind(this);
-    
-  }
+    };
+
+  
   handleSubmit(e) {
     e.preventDefault();
     const form=document.forms.travellerAdd;
@@ -115,7 +182,7 @@ class TravellerAdd extends React.Component{
     }
     else
     {
-      alert("Error: NO Seats!")
+      alert("Error: No Free Seats!")
     }
   }
   render() {
@@ -133,10 +200,57 @@ class TravellerAdd extends React.Component{
 class Homepage extends React.Component{
   constructor() {
     super();
-    this.state={ travellers: [] };
+    this.state={ travellers: [], visible: false , getElem: false, 
+      addElem: false, delElem: false};
     this.creatTraveller = this.creatTraveller.bind(this);
     this.deleteTraveller = this.deleteTraveller.bind(this);
+    this.clickSubmit=this.clickSubmit.bind(this);
+    this.getSubmit=this.getSubmit.bind(this);
+    this.addSubmit=this.addSubmit.bind(this);
+    this.delSubmit=this.delSubmit.bind(this);
+
   }
+
+  clickSubmit(e){
+    e.preventDefault();
+    if(this.state.visible==true) {
+      this.setState({ visible: false , getElem:false, addElem:false, delElem:false}) 
+    }
+    else{
+      this.setState({ visible: true , getElem:false, addElem:false, delElem:false}) 
+    }
+  }
+
+  getSubmit(e){
+    e.preventDefault();
+    if(this.state.getElem==true) {
+      this.setState({ getElem: false, visible: false , addElem:false, delElem:false}) 
+    }
+    else{
+      this.setState({ getElem: true, visible: false , addElem:false, delElem:false}) 
+    }
+  }
+
+  addSubmit(e){
+    e.preventDefault();
+    if(this.state.addElem==true) {
+      this.setState({ addElem: false, getElem: false, visible: false , delElem:false}) 
+    }
+    else{
+      this.setState({ addElem: true, getElem: false, visible: false , delElem:false}) 
+    }
+  }
+
+  delSubmit(e){
+    e.preventDefault();
+    if(this.state.delElem==true) {
+      this.setState({ delElem: false ,getElem: false, visible: false , addElem:false}) 
+    }
+    else{
+      this.setState({ delElem: true ,getElem: false, visible: false , addElem:false}) 
+    }
+  }
+ 
 
   componentDidMount() {
     this.loadData();
@@ -163,39 +277,36 @@ class Homepage extends React.Component{
     }
     this.setState({travellers: newTravellerList});
   }
+
+
   
-  showFreeSeats(){
-    var displayFree=document.getElementById("displayFreeSeats");
-    var displayTraveller=document.getElementById("displaytraveller");
-    var displayAdd=document.getElementById("addTraveller");
-    var displayDel=document.getElementById("deleteTraveller");
-    displayFree.style.display = "block";
-    displayTraveller.style.display = "none";
-    displayAdd.style.display = "none";
-    displayDel.style.display = "none";
-
-
-  }
-
   render(){
     return (
       <React.Fragment>
         <h1>Homepage</h1>
         <nav>
-          <button onClick={this.showFreeSeats()}>FreeSeats</button>
-          <button onClick={this.showTraveller()}>ReservationList</button>
-          <button onClick={this.showadd()}>addTraveller</button>
-          <button onClick={this.showdel()}>deleteTraveller</button>
+          <button onClick={this.clickSubmit}>FreeSeats</button>
+          <button onClick={this.getSubmit}>Reservation List</button>
+          <button onClick={this.addSubmit}>Add Traveller</button>
+          <button onClick={this.delSubmit}>Delete Traveller</button>
         </nav>
         <hr />
-        <ReservedTicket id="displayFreeSeats" />
+        {this.state.visible ? (
+          <ReservedTicket travellers={this.state.travellers}/>
+        ) : null}
         <hr />
-        <ReservationList id="displaytraveller" travellers={this.state.travellers} />
+        {this.state.getElem ? (
+          <ReservationList travellers={this.state.travellers} />
+        ) : null}
         <hr />
-        <TravellerAdd id="addTraveller" travellers={this.state.travellers} creatTraveller={this.creatTraveller} />
+        {this.state.addElem ? (
+          <TravellerAdd travellers={this.state.travellers} creatTraveller={this.creatTraveller} />
+        ) : null}
         <hr />
-        <TravellerDel id="deleteTraveller" travellers={this.state.travellers} deleteTraveller={this.deleteTraveller}/>
-      </React.Fragment>
+        {this.state.delElem ? (
+          <TravellerDel travellers={this.state.travellers} deleteTraveller={this.deleteTraveller}/>
+        ) : null}
+        </React.Fragment>
     );
   }
 }
