@@ -3,12 +3,96 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Pro MERN Stack</title>
+  <title>Ticket To Ride</title>
 
   <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
   <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+
+  <style>
+    body
+    {
+    background-color:white;
+    background-image: url(https://i0.wp.com/asiatimes.com/wp-content/uploads/2021/01/Singapore-Malaysia-HSR-Rail-e1610010391832.jpg?fit=1600%2C1052&ssl=1);
+    background-repeat: no-repeat;
+    background-size:cover;
+    }
+    .seatEmptyori{
+      background-color:darkgrey;
+      width: 15px;
+      height: 12px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      margin: 0px 3px;
+    }
+    .seatOccupiedori{
+      background-color:red;
+      width: 15px;
+      height: 12px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      margin: 0px 3px;
+    }
+    .seatEmpty{
+      background-color:darkgrey;
+      width: 15px;
+      height: 12px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      margin: 0px 3px;
+    }
+    .seatOccupied{
+      background-color:red;
+      width: 15px;
+      height: 12px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      margin: 0px 3px;
+    }
+    .showstyle{
+      background-color:#008acd;
+      border-radius: 3px;
+      display: flex;
+      justify-content: space-between;
+      list-style-type: none;
+      width: 300px;
+      margin: 30px auto;
+      padding: 5px 10px;
+    }
+    .showstyle li{
+      color:white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 10px;
+    }
+    .row{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color:white;
+      width: 300px;
+      margin: 30px auto;
+      padding: 5px 10px;
+    }
+    .container{
+      justify-content: center;
+      align-items: center;
+    }
+    table.showlist th,td{
+      justify-content: center;
+      align-items: center;
+      background-color:rgb(182, 219, 236);
+      
+      width: 120px;
+      margin: 30px auto;
+      padding: 5px 10px;
+    }
+    h1{
+      color: #008acd;
+    }
+  </style>
 </head>
 
 <body>
